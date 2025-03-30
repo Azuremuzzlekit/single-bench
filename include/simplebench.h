@@ -1,12 +1,12 @@
 /**
- * @file single_bench.h
+ * @file singlebench.h
  * @brief Zero-overhead microbenchmarking library (C11/C17 compatible)
  * @author Azuremuzzlekit
  * @license MIT
  * @version 1.1
  *
  * @usage:
- * #include "single_bench.h"
+ * #include "singlebench.h"
  * BENCH(1000000, {
  *     // Code to measure
  *     volatile double x = 3.1415926;
