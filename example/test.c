@@ -1,6 +1,6 @@
 // a bit of js style :)
 
-#include "../include/libbenchmark.h"
+#include "../include/singlebench.h"
 #include <unistd.h>
 
 int main() {
