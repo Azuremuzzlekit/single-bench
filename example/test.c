@@ -1,17 +1,20 @@
-// a bit of js style :)
+#include "bench.h"
 
-#include "../include/singlebench.h"
-#include <unistd.h>
+void example() {
+    volatile int x = 0;
+    
+    BENCH("Empty loop", {
+        for(int i = 0; i < 1000; i++) {
+            x = i;
+        }
+    }, 1000);
+
+    BENCH_RDTSC("CPU Cycles test", {
+        asm("nop");
+    }, 100000);
+}
 
 int main() {
-    // test of empty cycle
-    BENCH(1000, {
-        // empty block
-    });
-
-    BENCH(10000000, {
-        write(STDOUT_FILENO, NULL, 0);
-    });
-
+    example();
     return 0;
 }
