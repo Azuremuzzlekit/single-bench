@@ -1,23 +1,32 @@
-# single-bench
+# Precision Benchmark Library
 
-`single-bench` is a minimalist benchmarking library for C/C++. It allows you to measure the execution time of a block of code over a specified number of iterations and outputs performance-related information.
+Ultra-low overhead benchmarking tools for C/C++ developers.
 
-## Description
+## Features
 
-The library provides the `BENCH` macro, which measures the execution time of a code block. At the end, it prints information about the execution time, average time per operation, and throughput.
+- Two measurement modes:
+  - `BENCH()`: Nanosecond precision (using `clock_gettime()`)
+  - `BENCH_RDTSC()`: CPU cycle counts (using `RDTSCP`)
+- Calculates statistics: min/max/average times
+- Memory barriers prevent instruction reordering
+- No output pollution from measured code blocks
 
-**Example usage:**
+## Usage
 
 ```c
-#include "singlebench.h"
+#include "bench.h"
 
 int main() {
-    int sum = 0;
-    BENCH(1000, {
-        // Code to benchmark
-        for (int i = 0; i < 1000; ++i) {
-            sum += i;
-        }
-    });
+    // Measure nanoseconds
+    BENCH("Memory write", {
+        volatile int x = 0;
+        for(int i=0; i<1000; i++) x = i;
+    }, 1000);
+    
+    // Measure CPU cycles
+    BENCH_RDTSC("NOP instruction", {
+        asm("nop");
+    }, 100000);
+    
     return 0;
 }
